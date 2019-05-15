@@ -1,3 +1,43 @@
 # Redis Cluster w/ Sentinel
 
 This Terraform module deploys resources to a Kubernetes cluster to run a redis instance with sentinel support.
+
+## Usage
+
+The module is designed to function with minimal bootstrapping. Just provide the provider alias for the kubernetes cluster and the image pull secret for the redis image and the module will handle the rest.
+
+```hcl
+module "redis" {
+  source = "git::git@wwwin-github.cisco.com:broadcloud-iac/terraform-kubernetes-redis-sentinel.git
+
+  providers = {
+    "kubernetes" = "kubernetes"
+  }
+
+  redis_image_pull_secret = "${kubernetes_secret.redis_image_pull_secret.metadata.0.name}"
+}
+```
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| kube_namespace |  | string | `default` | no |
+| redis_image |  | string | `gcr.io/cloud-marketplace/google/redis4:latest` | no |
+| redis_image_pull_secret |  | string | - | yes |
+| redis_service_port | The port used to connect to the redis service. | string | `6379` | no |
+| redis_slave_replicas | The number of redis slave replicas to run. | string | `3` | no |
+| sentinel_replicas | The number of sentinel replicas to run. | string | `3` | no |
+| sentinel_service_port | The port used to connect to the redis sentinel service. | string | `26379` | no |
+
+## Outputs
+
+| Name | Description |
+|------|-------------|
+| master_ip | The ip address of the master service. |
+| master_port | The port to connect to the redis master. |
+| master_service | The routable name for the master service. |
+| sentinel_ip | The ip address of the sentinel service |
+| sentinel_monitored_master | The name of redis master being monitored by redis. |
+| sentinel_port | The port for the sentinel service |
+| sentinel_service | The routable name for the sentinel service. |
