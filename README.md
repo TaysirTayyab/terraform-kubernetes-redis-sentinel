@@ -2,17 +2,19 @@
 
 This Terraform module deploys resources to a Kubernetes cluster to run a redis instance with sentinel support.
 
+* 1 redis master
+* 3 (configurable) redis slaves
+* 3 (configurable) redis sentinels
+
+Slaves and sentinels are configured with anti-affinity to spread the replicas across nodes. Sentinels will automatically detect slaves from the master.
+
 ## Usage
 
 The module is designed to function with minimal bootstrapping. Just provide the provider alias for the kubernetes cluster and the image pull secret for the redis image and the module will handle the rest.
 
 ```hcl
 module "redis" {
-  source = "git::git@wwwin-github.cisco.com:broadcloud-iac/terraform-kubernetes-redis-sentinel.git
-
-  providers = {
-    "kubernetes" = "kubernetes"
-  }
+  source = "git::git@wwwin-github.cisco.com:broadcloud-iac/terraform-kubernetes-redis-sentinel.git"
 
   redis_image_pull_secret = "${kubernetes_secret.redis_image_pull_secret.metadata.0.name}"
 }

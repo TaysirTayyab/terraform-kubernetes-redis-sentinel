@@ -1,3 +1,8 @@
+variable "redis_image" {
+  description = "The redis image for the master, slaves, and sentinels."
+  default     = "gcr.io/cloud-marketplace/google/redis4:latest"
+}
+
 variable "redis_image_pull_secret" {
   description = "The credentials used to authorize to the container registry."
 }
@@ -5,11 +10,6 @@ variable "redis_image_pull_secret" {
 variable "kube_namespace" {
   description = "The k8s namespace where the redis cluster will be deployed."
   default     = "default"
-}
-
-variable "redis_image" {
-  description = "The redis image for the master, slaves, and sentinels."
-  default     = "gcr.io/cloud-marketplace/google/redis4:latest"
 }
 
 variable "redis_service_port" {
