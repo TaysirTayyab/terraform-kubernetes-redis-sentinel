@@ -22,9 +22,9 @@ module "redis" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| kube_namespace |  | string | `default` | no |
-| redis_image |  | string | `gcr.io/cloud-marketplace/google/redis4:latest` | no |
-| redis_image_pull_secret |  | string | - | yes |
+| kube_namespace | The k8s namespace where the redis cluster will be deployed. | string | `default` | no |
+| redis_image | The redis image for the master, slaves, and sentinels. | string | `gcr.io/cloud-marketplace/google/redis4:latest` | no |
+| redis_image_pull_secret | The credentials used to authorize to the container registry. | string | - | yes |
 | redis_service_port | The port used to connect to the redis service. | string | `6379` | no |
 | redis_slave_replicas | The number of redis slave replicas to run. | string | `3` | no |
 | sentinel_replicas | The number of sentinel replicas to run. | string | `3` | no |
@@ -37,7 +37,7 @@ module "redis" {
 | master_ip | The ip address of the master service. |
 | master_port | The port to connect to the redis master. |
 | master_service | The routable name for the master service. |
-| sentinel_ip | The ip address of the sentinel service |
+| sentinel_ip | The ip address of the sentinel service. |
 | sentinel_monitored_master | The name of redis master being monitored by redis. |
-| sentinel_port | The port for the sentinel service |
+| sentinel_port | The port for the sentinel service. |
 | sentinel_service | The routable name for the sentinel service. |

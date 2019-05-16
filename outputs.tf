@@ -19,12 +19,12 @@ output "sentinel_service" {
 }
 
 output "sentinel_ip" {
-  description = "The ip address of the sentinel service"
+  description = "The ip address of the sentinel service."
   value       = "${kubernetes_service.redis_sentinel.spec.0.cluster_ip}"
 }
 
 output "sentinel_port" {
-  description = "The port for the sentinel service"
+  description = "The port for the sentinel service."
   value       = "${kubernetes_service.redis_sentinel.spec.0.port.0.port}"
 }
 
