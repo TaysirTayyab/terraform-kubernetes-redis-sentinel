@@ -40,6 +40,26 @@ resource "kubernetes_stateful_set" "redis_slave" {
       }
 
       spec {
+        affinity {
+          pod_anti_affinity {
+            preferred_during_scheduling_ignored_during_execution {
+              pod_affinity_term {
+                label_selector {
+                  match_expressions {
+                    key      = "name"
+                    operator = "In"
+                    values   = ["${local.slave_pod_name}"]
+                  }
+                }
+
+                topology_key = "kubernetes.io/hostname"
+              }
+
+              weight = 100
+            }
+          }
+        }
+
         container {
           name  = "${local.slave_pod_name}"
           image = "${var.redis_image}"

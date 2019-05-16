@@ -40,6 +40,26 @@ resource "kubernetes_stateful_set" "redis_sentinel" {
       }
 
       spec {
+        affinity {
+          pod_anti_affinity {
+            preferred_during_scheduling_ignored_during_execution {
+              pod_affinity_term {
+                label_selector {
+                  match_expressions {
+                    key      = "name"
+                    operator = "In"
+                    values   = ["${local.sentinel_pod_name}"]
+                  }
+                }
+
+                topology_key = "kubernetes.io/hostname"
+              }
+
+              weight = 100
+            }
+          }
+        }
+
         # config maps are mounted as read-only and sentinel wants to be able to
         # write to it, so this init will copy the sentinel config to a writable
         # location
