@@ -2,6 +2,10 @@
 
 The change log is versioned as major.minor.patch. The major version corresponds to the version of redis. So for example v4.X.X will always be redis 4.
 
+## v4.1.0
+
+Added support for Redis authentication. 
+
 ## v4.0.1
 
 Minor updates to documentation.

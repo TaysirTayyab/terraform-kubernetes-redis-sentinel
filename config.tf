@@ -3,6 +3,7 @@ data "template_file" "redis_node_config" {
 
   vars = {
     server_port = 6379
+    redis_auth  = "${var.redis_auth}"
   }
 }
 
@@ -25,6 +26,7 @@ data "template_file" "sentinel_node_config" {
     master_name = "${local.master_pod_name}"
     master_host = "${kubernetes_service.redis_master.metadata.0.name}"
     master_port = "${var.redis_service_port}"
+    redis_auth  = "${var.redis_auth}"
   }
 }
 
