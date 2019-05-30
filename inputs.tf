@@ -3,6 +3,11 @@ variable "redis_image" {
   default     = "gcr.io/cloud-marketplace/google/redis4:latest"
 }
 
+variable "redis_auth" {
+  description = "Password to access the Redis database"
+  default     = ""
+}
+
 variable "redis_image_pull_secret" {
   description = "The credentials used to authorize to the container registry."
 }

@@ -31,6 +31,7 @@ module "redis" {
 | redis_slave_replicas | The number of redis slave replicas to run. | string | `3` | no |
 | sentinel_replicas | The number of sentinel replicas to run. | string | `3` | no |
 | sentinel_service_port | The port used to connect to the redis sentinel service. | string | `26379` | no |
+| redis_auth | Set this value to password protect the Redis instances. Disabled by default. | string |  | no |
 
 ## Outputs
 
