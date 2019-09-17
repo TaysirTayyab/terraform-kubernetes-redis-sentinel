@@ -8,7 +8,9 @@ resource "kubernetes_deployment" "redis_master" {
     replicas = 1
 
     selector {
-      name = "${local.master_pod_name}"
+      match_labels {
+        name = "${local.master_pod_name}"
+      }
     }
 
     template {

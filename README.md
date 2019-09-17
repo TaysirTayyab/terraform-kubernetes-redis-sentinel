@@ -10,7 +10,9 @@ Slaves and sentinels are configured with anti-affinity to spread the replicas ac
 
 ## Usage
 
-The module is designed to function with minimal bootstrapping. Just provide the provider alias for the kubernetes cluster and the image pull secret for the redis image and the module will handle the rest.
+**This module requires v1.8.0 of the terraform kubernetes provider!**
+
+The module is designed to function with minimal bootstrapping. Just provide the image pull secret for the redis image and the module will handle the rest.
 
 ```hcl
 module "redis" {

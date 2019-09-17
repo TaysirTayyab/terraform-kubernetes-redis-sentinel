@@ -29,7 +29,9 @@ resource "kubernetes_stateful_set" "redis_slave" {
     replicas     = "${var.redis_slave_replicas}"
 
     selector {
-      name = "${local.slave_pod_name}"
+      match_labels {
+        name = "${local.slave_pod_name}"
+      }
     }
 
     template {

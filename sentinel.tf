@@ -29,7 +29,9 @@ resource "kubernetes_stateful_set" "redis_sentinel" {
     replicas     = "${var.sentinel_replicas}"
 
     selector {
-      name = "${local.sentinel_pod_name}"
+      match_labels {
+        name = "${local.sentinel_pod_name}"
+      }
     }
 
     template {
