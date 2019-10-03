@@ -28,6 +28,8 @@ resource "kubernetes_stateful_set" "redis_slave" {
     service_name = "${kubernetes_service.redis_slave.metadata.0.name}"
     replicas     = "${var.redis_slave_replicas}"
 
+    update_strategy {}
+
     selector {
       match_labels {
         name = "${local.slave_pod_name}"

@@ -28,6 +28,8 @@ resource "kubernetes_stateful_set" "redis_sentinel" {
     service_name = "${kubernetes_service.redis_sentinel.metadata.0.name}"
     replicas     = "${var.sentinel_replicas}"
 
+    update_strategy {}
+
     selector {
       match_labels {
         name = "${local.sentinel_pod_name}"
