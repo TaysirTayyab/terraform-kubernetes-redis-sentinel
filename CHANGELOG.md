@@ -2,6 +2,10 @@
 
 The change log is versioned as major.minor.patch. The major version corresponds to the version of redis. So for example v4.X.X will always be redis 4.
 
+## v4.2.1
+
+* fixes a bug where update_policy doesn't apply correctly on Google
+
 ## v4.2.0
 
 * **BREAKING** added support for terraform kubernetes provider v1.8.0
