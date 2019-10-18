@@ -26,6 +26,7 @@ data "template_file" "sentinel_node_config" {
     master_name = "${local.master_pod_name}"
     master_host = "${local.master_pod_name}"
     master_port = "${var.redis_service_port}"
+    quorum      = "${ceil(var.sentinel_replicas / 2.0)}"
     redis_auth  = "${var.redis_auth}"
   }
 }
