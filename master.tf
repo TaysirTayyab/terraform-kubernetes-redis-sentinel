@@ -23,6 +23,26 @@ resource "kubernetes_deployment" "redis_master" {
       }
 
       spec {
+        # config maps are mounted as read-only and sentinel wants to be able to
+        # write to it, so this init will copy the sentinel config to a writable
+        # location
+        init_container {
+          name  = "copy-config"
+          image = "busybox"
+
+          command = ["sh", "-c", "cp /tmp/redis/redis.conf /tmp/writable/redis.conf"]
+
+          volume_mount {
+            name       = "redis-config"
+            mount_path = "/tmp/redis"
+          }
+
+          volume_mount {
+            name       = "writable-directory"
+            mount_path = "/tmp/writable/"
+          }
+        }
+
         container {
           name  = "${local.master_pod_name}"
           image = "${var.redis_image}"
@@ -47,7 +67,7 @@ resource "kubernetes_deployment" "redis_master" {
           }
 
           volume_mount {
-            name       = "redis-config"
+            name       = "writable-directory"
             mount_path = "/etc/redis"
           }
 
@@ -63,6 +83,11 @@ resource "kubernetes_deployment" "redis_master" {
           config_map {
             name = "${kubernetes_config_map.redis_node_config.metadata.0.name}"
           }
+        }
+
+        volume {
+          name      = "writable-directory"
+          empty_dir = {}
         }
 
         volume {
