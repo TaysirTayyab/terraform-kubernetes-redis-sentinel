@@ -26,23 +26,22 @@ module "redis" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
-| kube_namespace | The k8s namespace where the redis cluster will be deployed. | string | `default` | no |
-| redis_image | The redis image for the master, slaves, and sentinels. | string | `gcr.io/cloud-marketplace/google/redis4:latest` | no |
-| redis_image_pull_secret | The credentials used to authorize to the container registry. | string | - | yes |
-| redis_service_port | The port used to connect to the redis service. | string | `6379` | no |
-| redis_slave_replicas | The number of redis slave replicas to run. | string | `3` | no |
-| sentinel_replicas | The number of sentinel replicas to run. | string | `3` | no |
-| sentinel_service_port | The port used to connect to the redis sentinel service. | string | `26379` | no |
-| redis_auth | Set this value to password protect the Redis instances. Disabled by default. | string |  | no |
+| kube\_namespace | The k8s namespace where the redis cluster will be deployed. MUST be less than or equal to 9 characters! | string | `"default"` | no |
+| redis\_auth | Password to access the Redis database | string | `""` | no |
+| redis\_image | The redis image for the master, slaves, and sentinels. | string | `"gcr.io/cloud-marketplace/google/redis4:latest"` | no |
+| redis\_image\_pull\_secret | The credentials used to authorize to the container registry. | string | n/a | yes |
+| redis\_service\_port | The port used to connect to the redis service. | string | `"6379"` | no |
+| redis\_slave\_replicas | The number of redis slave replicas to run. | string | `"3"` | no |
+| sentinel\_replicas | The number of sentinel replicas to run. | string | `"3"` | no |
+| sentinel\_service\_port | The port used to connect to the redis sentinel service. | string | `"26379"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| master_ip | The ip address of the master service. |
-| master_port | The port to connect to the redis master. |
-| master_service | The routable name for the master service. |
-| sentinel_ip | The ip address of the sentinel service. |
-| sentinel_monitored_master | The name of redis master being monitored by redis. |
-| sentinel_port | The port for the sentinel service. |
-| sentinel_service | The routable name for the sentinel service. |
+| master\_ip | The ip address of the master service. |
+| master\_port | The port to connect to the redis master. |
+| master\_service | The routable name for the master replica. |
+| sentinel\_monitored\_master | The name of the (default) redis master. |
+| sentinel\_port | The port for the sentinel replicas. |
+| sentinel\_services | The routable names for the sentinel replicas. |
