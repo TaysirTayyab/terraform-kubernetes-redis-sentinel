@@ -14,8 +14,8 @@ output "master_port" {
 }
 
 output "sentinel_service" {
-  description = "The routable name for the sentinel service."
-  value       = "${kubernetes_service.redis_sentinel.metadata.0.name}"
+  description = "The routable names for the sentinel service."
+  value       = "${data.template_file.redis_sentinel_host_names.*.rendered}"
 }
 
 output "sentinel_ip" {

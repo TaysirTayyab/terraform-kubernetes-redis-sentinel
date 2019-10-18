@@ -1,3 +1,8 @@
+data "template_file" "redis_sentinel_host_names" {
+  count    = "${var.sentinel_replicas}"
+  template = "${kubernetes_stateful_set.redis_sentinel.metadata.0.name}-${count.index}.${kubernetes_service.redis_sentinel.metadata.0.name}.${var.kube_namespace}.svc.cluster.local"
+}
+
 resource "kubernetes_service" "redis_sentinel" {
   metadata {
     name      = "${local.sentinel_pod_name}"
@@ -5,7 +10,8 @@ resource "kubernetes_service" "redis_sentinel" {
   }
 
   spec {
-    type = "ClusterIP"
+    type       = "ClusterIP"
+    cluster_ip = "None"
 
     selector {
       name = "${local.sentinel_pod_name}"
