@@ -1,6 +1,6 @@
 resource "kubernetes_service" "redis_slave" {
   metadata {
-    name      = "redis-slave"
+    name      = "${local.slave_pod_name}"
     namespace = "${var.kube_namespace}"
   }
 
@@ -20,7 +20,7 @@ resource "kubernetes_service" "redis_slave" {
 
 resource "kubernetes_stateful_set" "redis_slave" {
   metadata {
-    name      = "redis-slave"
+    name      = "${local.slave_pod_name}"
     namespace = "${var.kube_namespace}"
   }
 

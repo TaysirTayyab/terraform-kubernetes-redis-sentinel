@@ -1,10 +1,12 @@
 resource "kubernetes_deployment" "redis_master" {
   metadata {
-    name      = "redis-master"
+    name      = "${local.master_pod_name}"
     namespace = "${var.kube_namespace}"
   }
 
   spec {
+    # should never be more than 1 replica, use var.redis_slave_replicas for
+    # scaling HA
     replicas = 1
 
     selector {
@@ -76,7 +78,7 @@ resource "kubernetes_deployment" "redis_master" {
 
 resource "kubernetes_service" "redis_master" {
   metadata {
-    name      = "redis-master"
+    name      = "${local.master_pod_name}"
     namespace = "${var.kube_namespace}"
   }
 
@@ -84,7 +86,7 @@ resource "kubernetes_service" "redis_master" {
     type = "ClusterIP"
 
     selector {
-      name = "${kubernetes_deployment.redis_master.spec.0.template.0.spec.0.container.0.name}"
+      name = "${local.master_pod_name}"
     }
 
     port {

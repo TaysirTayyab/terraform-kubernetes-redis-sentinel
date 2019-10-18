@@ -1,6 +1,6 @@
 resource "kubernetes_service" "redis_sentinel" {
   metadata {
-    name      = "redis-sentinel"
+    name      = "${local.sentinel_pod_name}"
     namespace = "${var.kube_namespace}"
   }
 
@@ -20,7 +20,7 @@ resource "kubernetes_service" "redis_sentinel" {
 
 resource "kubernetes_stateful_set" "redis_sentinel" {
   metadata {
-    name      = "redis-sentinel"
+    name      = "${local.sentinel_pod_name}"
     namespace = "${var.kube_namespace}"
   }
 
