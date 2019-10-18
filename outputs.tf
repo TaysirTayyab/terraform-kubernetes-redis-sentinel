@@ -13,14 +13,9 @@ output "master_port" {
   value       = "${kubernetes_service.redis_master.spec.0.port.0.port}"
 }
 
-output "sentinel_service" {
+output "sentinel_services" {
   description = "The routable names for the sentinel service."
   value       = "${data.template_file.redis_sentinel_host_names.*.rendered}"
-}
-
-output "sentinel_ip" {
-  description = "The ip address of the sentinel service."
-  value       = "${kubernetes_service.redis_sentinel.spec.0.cluster_ip}"
 }
 
 output "sentinel_port" {
