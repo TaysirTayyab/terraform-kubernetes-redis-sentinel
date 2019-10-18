@@ -31,6 +31,8 @@ resource "kubernetes_deployment" "redis_master" {
 
           args = [
             "/etc/redis/redis.conf",
+            "--slave-announce-ip ${kubernetes_service.redis_master.metadata.0.name}",
+            "--slave-announce-port ${var.redis_service_port}",
             "--protected-mode",
             "no",
           ]

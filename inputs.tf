@@ -13,7 +13,10 @@ variable "redis_image_pull_secret" {
 }
 
 variable "kube_namespace" {
-  description = "The k8s namespace where the redis cluster will be deployed."
+  description = <<EOF
+The k8s namespace where the redis cluster will be deployed. MUST be less than
+or equal to 9 characters!
+EOF
   default     = "default"
 }
 

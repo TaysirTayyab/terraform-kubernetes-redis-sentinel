@@ -5,7 +5,8 @@ resource "kubernetes_service" "redis_slave" {
   }
 
   spec {
-    type = "ClusterIP"
+    type       = "ClusterIP"
+    cluster_ip = "None"
 
     selector {
       name = "${local.slave_pod_name}"
@@ -72,10 +73,26 @@ resource "kubernetes_stateful_set" "redis_slave" {
 
           args = [
             "/etc/redis/redis.conf",
-            "--slaveof ${kubernetes_service.redis_master.metadata.0.name} ${var.redis_service_port}",
+            "--slaveof",
+            "${kubernetes_service.redis_master.metadata.0.name}",
+            "${var.redis_service_port}",
+            "--slave-announce-ip",
+            "$(POD_NAME).${kubernetes_service.redis_slave.metadata.0.name}.${var.kube_namespace}.svc.cluster.local",
+            "--slave-announce-port",
+            "${var.redis_service_port}",
             "--protected-mode",
             "no",
           ]
+
+          env {
+            name = "POD_NAME"
+
+            value_from {
+              field_ref {
+                field_path = "metadata.name"
+              }
+            }
+          }
 
           env {
             name  = "config-file-hash"
