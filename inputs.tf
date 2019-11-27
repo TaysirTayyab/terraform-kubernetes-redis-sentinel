@@ -17,7 +17,8 @@ variable "kube_namespace" {
 The k8s namespace where the redis cluster will be deployed. MUST be less than
 or equal to 9 characters!
 EOF
-  default     = "default"
+
+  default = "default"
 }
 
 variable "redis_service_port" {
@@ -38,4 +39,9 @@ variable "sentinel_service_port" {
 variable "sentinel_replicas" {
   description = "The number of sentinel replicas to run."
   default     = 3
+}
+
+variable "include_prometheus_exporter" {
+  description = "True to also deploy the prometheus exporter for redis."
+  default     = false
 }
