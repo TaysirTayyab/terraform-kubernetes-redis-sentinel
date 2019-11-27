@@ -2,6 +2,10 @@
 
 The change log is versioned as major.minor.patch. The major version corresponds to the version of redis. So for example v4.X.X will always be redis 4.
 
+## v4.4.0
+
+* **added** `include_prometheus_exporter` to also deploy a prometheus exporter that monitors the cluster master
+
 ## v4.3.0
 
 * fixed a bug where master was failing to update it's config file on boot

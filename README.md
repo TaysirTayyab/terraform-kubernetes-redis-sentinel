@@ -10,7 +10,7 @@ Slaves and sentinels are configured with anti-affinity to spread the replicas ac
 
 ## Usage
 
-**This module requires v1.8.0 of the terraform kubernetes provider!**
+**This module requires v1.8.0 or newer of the terraform kubernetes provider!**
 
 The module is designed to function with minimal bootstrapping. Just provide the image pull secret for the redis image and the module will handle the rest.
 
@@ -26,6 +26,7 @@ module "redis" {
 
 | Name | Description | Type | Default | Required |
 |------|-------------|:----:|:-----:|:-----:|
+| include\_prometheus\_exporter | True to also deploy the prometheus exporter for redis. | string | `"false"` | no |
 | kube\_namespace | The k8s namespace where the redis cluster will be deployed. MUST be less than or equal to 9 characters! | string | `"default"` | no |
 | redis\_auth | Password to access the Redis database | string | `""` | no |
 | redis\_image | The redis image for the master, slaves, and sentinels. | string | `"gcr.io/cloud-marketplace/google/redis4:latest"` | no |
