@@ -13,7 +13,7 @@ resource "kubernetes_config_map" "redis_node_config" {
     namespace = "${var.kube_namespace}"
   }
 
-  data {
+  data = {
     "redis.conf" = "${data.template_file.redis_node_config.rendered}"
   }
 }
@@ -37,7 +37,7 @@ resource "kubernetes_config_map" "sentinel_node_config" {
     namespace = "${var.kube_namespace}"
   }
 
-  data {
+  data = {
     "sentinel.conf" = "${data.template_file.sentinel_node_config.rendered}"
   }
 }

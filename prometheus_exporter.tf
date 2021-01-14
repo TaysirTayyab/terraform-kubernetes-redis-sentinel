@@ -5,7 +5,7 @@ resource "kubernetes_service" "redis_exporter" {
     name      = "redis-exporter"
     namespace = "${var.kube_namespace}"
 
-    annotations {
+    annotations = {
       "prometheus.io/scrape" = "true"
       "prometheus.io/port"   = 9121
       "prometheus.io/path"   = "/metrics"
